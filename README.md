@@ -128,12 +128,12 @@ A card 'docBlocksAdmin.card' will be created.
 
 Visit the page http://localhost/docblocks/php/uploadCard.php and upload the newly created card file.
 
-![Upload Card](/web-app/screenshots/uploadCard.png?raw=true)
+![Upload Card](/web-app/docblocks/screenshots/uploadCard.png?raw=true)
 
 Now first Institute needs to be created.
 So go to http://localhost/docblocks/php/createInstitute.php/ and create a new Institute.
 
-![Create Institute](/web-app/screenshots/createInstitute.png?raw=true)
+![Create Institute](/web-app/docblocks/screenshots/createInstitute.png?raw=true)
 
 Now create Institute Admin
 
@@ -141,13 +141,13 @@ Go to http://localhost/docblocks/php/createInstituteAdmin.php/
 
 Here enter the same institute id that is entered at the time of creating institute.
 
-![Create Institute Admin](/web-app/screenshots/createInstituteAdmin.png?raw=true)
+![Create Institute Admin](/web-app/docblocks/screenshots/createInstituteAdmin.png?raw=true)
 
 Now an id needs to be issued to the institute admin so that institute admin can create new participants (certificate issuer, authenticator and student)
 
 Go to http://localhost/docblocks/php/issueIdentity.php/
 From Drop down menu, select participant type as 'Institute Admin' and add participant id same as that entered at the time of creating the institute admin. After submitting the form, a card file will be downloaded.
-![Issue Identity](/web-app/screenshots/createInstituteAdmin.png?raw=true)
+![Issue Identity](/web-app/docblocks/screenshots/createInstituteAdmin.png?raw=true)
 
 Now logout from github and again login using other id and again upload the card that is created in the previous step.
 Now this new id will be the institue admin. So whenever application is accessed using this github account. It will act as institute admin. Card needs to be uploaded only once and becomes invalid after uploading, so no other can use the card.
@@ -155,13 +155,13 @@ Now this new id will be the institue admin. So whenever application is accessed 
 Now create a student.
 http://localhost/docblocks/php/createStudent.php/
 
-![Create Student](/web-app/screenshots/createStudent.png?raw=true)
+![Create Student](/web-app/docblocks/screenshots/createStudent.png?raw=true)
 
 Now create certificate issuer
 
 http://localhost/docblocks/php/createCertificateIssuer.php
 
-![Create Certificate Issuer](/web-app/screenshots/createCertificateIssuer.png?raw=true)
+![Create Certificate Issuer](/web-app/docblocks/screenshots/createCertificateIssuer.png?raw=true)
 
 Issue identity to this certificate issuer. A card file will be downloaded.
 The card can be uploaded using another github id, but same github id can also hold multiple card and it is possilble to switch between the cards. 
@@ -180,7 +180,7 @@ The file will be uploaded to IPFS and its hash will be stored in the blockchain.
 
 http://localhost/docblocks/php/createDocument.php
 
-![Create Document](/web-app/screenshots/createDocument.png?raw=true)
+![Create Document](/web-app/docblocks/screenshots/createDocument.png?raw=true)
 
 ## To Download Document
 There are different methods:
@@ -193,4 +193,4 @@ After submitting the form, the document will be downloaded.
 
 http://localhost/docblocks/php/documents.php
 
-![Create Document](/web-app/screenshots/documents.png?raw=true)
+![Create Document](/web-app/docblocks/screenshots/documents.png?raw=true)
