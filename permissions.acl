@@ -1,0 +1,364 @@
+/* rule for all participants
+*/
+// This rule is needed for all Participants
+rule EDUNetworkAdminPermissionSystem{
+  description: "can READ the System Registries"
+  participant: "ANY"
+  operation: READ
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+rule ReadInstitutePermission {
+  description: "allow to read institutes"
+  participant: "ANY"
+  operation: READ
+  resource: "org.docblocks.participant.Institute"
+  action: ALLOW
+}
+
+
+/*
+* NETWORK ADMIN
+* allow all read access
+* allow all operations on system resources
+* allow to create, update, delete institute admin
+* allow to delete certificateIssuer
+* allow to create transaction CreateInstituteAdmin
+* allow to create transaction CreateInstitute
+*/
+
+
+// allow the system network admin to carry out identities management
+//and network operation
+rule NetworkControlPermission {
+  description: "give admin all access to system resources"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.*"
+  action: ALLOW
+}
+
+rule InstituteAdminRegistryControlPermission{
+  description: "give network admin ALL access to institute admin types"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.docblocks.participant.InstituteAdmin"
+  action: ALLOW
+}
+
+// allow to CRUD institute
+rule NetworkAdminCreateInstitutePermission {
+  description: "allow CRUD operations on institute"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.docblocks.participant.Institute"
+  action: ALLOW
+}
+
+rule CertificateIssuerRegistryControlPermission{
+  description: "give network admin DELETE access to institute issuer types"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: DELETE, READ
+  resource: "org.docblocks.participant.CertificateIssuer"
+  action: ALLOW
+}
+
+rule AuthenticatorRegistryControlPermission{
+  description: "give network admin DELETE access to institute authenticator types"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: DELETE, READ
+  resource: "org.docblocks.participant.Authenticator"
+  action: ALLOW
+}
+
+rule DocumentsRegistryControlPermission{
+  description: "give network admin DELETE access to institute issuer types"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: DELETE, READ
+  resource: "org.docblocks.document.Document"
+  action: ALLOW
+}
+
+rule CreateInstituteAdminTransactionPermission {
+  description: "allow to create CreateInstituteAdmin transaction"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: CREATE, READ
+  resource: "org.docblocks.participant.CreateInstituteAdmin"
+  action: ALLOW
+}
+
+rule CreateInstituteTransactionPermission{
+  description: "allow to create CreateInstitute transaction"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: CREATE, READ
+  resource: "org.docblocks.participant.CreateInstitute"
+  action: ALLOW
+}
+
+/*
+* INSTITUTE ADMIN
+* allow to READ all documents, all Institute Admins
+* allow to create issuer, authenticator
+* allow to issue identity
+* allow create CreateIdentity Transaction
+* allow to to Add Participants to system
+* allow to add to HistorianRecord
+* allow to create new student
+* allow to create CreateStudent Transaction
+* allow to removeParticipant- issuer and authenticator for same institute
+*/
+
+
+// allow Institute admin to Read all documents, institute Admins
+rule InstituteAdminReadResources{
+  description: "can READ all documents"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: READ
+  resource: "org.docblocks.document.Document"
+  action: ALLOW
+}
+
+rule InstituteAdminReadInstituteAdmins{
+  description: "can read all institute admins"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: READ
+  resource: "org.docblocks.participant.InstituteAdmin"
+  action: ALLOW
+}
+
+// allow to create new student
+rule InstitueAdminCreateStudentPermission{
+  description: "allow to create, read student"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE, READ
+  resource: "org.docblocks.participant.Student"
+  action: ALLOW
+}
+
+// allow to create issuer
+rule InstitueAdminCreateIssuerPermission{
+  description: "allow CRUD operations on issuer for same institute"
+  participant(p): "org.docblocks.participant.InstituteAdmin"
+  operation: ALL
+  resource(r): "org.docblocks.participant.CertificateIssuer"
+  condition: (p.institute.getIdentifier() == r.institute.getIdentifier())
+  action: ALLOW
+}
+
+
+// allow to create authenticator
+rule InstitueAdminCreateAuthenticatorPermission{
+  description: "allow CRUD operations on authenticator for same institute"
+  participant(p): "org.docblocks.participant.InstituteAdmin"
+  operation: ALL
+  resource(r): "org.docblocks.participant.Authenticator"
+  condition: (p.institute.getIdentifier() == r.institute.getIdentifier())
+  action: ALLOW
+}
+// allow to issue new identities
+rule InstituteAdminIssueIdentityPermission {
+  description: "allow to Create new identity"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.Identity"
+  action: ALLOW
+}
+// allow to create issueIdentity transaction T
+rule InstituteAdminCreateIssueIdentityTransactionPermission {
+  description: "allow to Create new identity"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.IssueIdentity"
+  action: ALLOW
+}
+
+// allow to create transaction CreateCertificateIssuer
+rule InstituteAdminCreateCertificateIssuerTransactionPermission {
+  description: "allow to create, read CreateCertificateIssuer transaction"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE, READ
+  resource: "org.docblocks.participant.CreateCertificateIssuer"
+  action: ALLOW
+}
+
+// allow to create transaction CreateaAuthenticator
+rule InstituteAdminCreateAuthenticatorTransaction {
+  description: "allow to CREATE, READ CreateAuthenticator transaction"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE, READ
+  resource: "org.docblocks.participant.CreateAuthenticator"
+  action: ALLOW
+}
+
+// allow to create CreateStudent transaction
+rule InstituteAdminCreateStudentTransaction {
+  description: "allow to CREATE, READ CreateStudent transaction"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE, READ
+  resource: "org.docblocks.participant.CreateStudent"
+  action: ALLOW
+}
+
+// allow to add participants to system
+rule InstitueAdminCreateSystemParticipant{
+  description: "allow to create issuer (for same institute)"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.AddParticipant"
+  action: ALLOW
+}
+
+// allow to remove participant
+rule RemoveCertificateIssuerPermission {
+  description: "allow to remove participant"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.RemoveParticipant"
+  action: ALLOW
+}
+
+
+// allow to create HistorianRecord
+rule InstitueAdminHistorianPermission{
+  description: "allow to create HistorianRecord"
+  participant: "org.docblocks.participant.InstituteAdmin"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.HistorianRecord"
+  action: ALLOW
+}
+
+
+
+/*
+* CERTIFICATEISSUER
+* allow to read all documents, students, institute admin for same institute
+* allow to crate new documents
+*/
+
+// allow issuer to read all documents
+rule IssuerReadDocumentsPermission{
+  description: "allow to read all documents"
+  participant: "org.docblocks.participant.CertificateIssuer"
+  operation: READ
+  resource: "org.docblocks.document.Document"
+  action: ALLOW
+}
+
+// allow to read students
+rule IssuerReadStudentsPermission {
+  description: "allow to read students"
+  participant: "org.docblocks.participant.CertificateIssuer"
+  operation: READ
+  resource: "org.docblocks.participant.Student"
+  action: ALLOW
+}
+
+// allow to read institute admin for same institute
+rule IssuerReadInstituteAdminPermission {
+  description: "allow to read institute admin for same institute"
+  participant(p): "org.docblocks.participant.CertificateIssuer"
+  operation: READ
+  resource(r): "org.docblocks.participant.InstituteAdmin"
+  condition: (p.institute.getIdentifier() == r.institute.getIdentifier())
+  action: ALLOW
+}
+
+// allow to read authenticator for same institute
+rule IssuerReadAuthenticatorPermission {
+  description: "allow to read authenticator for same institute"
+  participant(p): "org.docblocks.participant.CertificateIssuer"
+  operation: READ
+  resource(r): "org.docblocks.participant.Authenticator"
+  condition: (p.institute.getIdentifier() == r.institute.getIdentifier())
+  action: ALLOW
+}
+
+// allow to create new documents
+rule IssuerCreateDocumentsPermission {
+  description: "allow to create new Documents for same institute"
+  participant(p): "org.docblocks.participant.CertificateIssuer"
+  operation: CREATE
+  resource(r): "org.docblocks.document.Document"
+  condition: (p.institute.getIdentifier() == r.institute.getIdentifier())
+  action: ALLOW
+}
+
+// allow to add to HistorianRecord
+rule IssuerCreateHistorianRecord {
+  description: "allow to create HistorianRecord"
+  participant: "org.docblocks.participant.CertificateIssuer"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.HistorianRecord"
+  action: ALLOW
+}
+
+// allow to create Transaction CreateDocument
+rule IssuerCreateDocumentTransactionPermission{
+  description: "allow to create CreateDocument transaction"
+  participant: "org.docblocks.participant.CertificateIssuer"
+  operation: CREATE, READ
+  resource: "org.docblocks.document.*"
+  transaction: "org.docblocks.document.CreateDocument"
+  action: ALLOW
+}
+
+
+/*
+* AUTHENTICATOR
+* allow to read all documents, students, institute admin for same institute
+* allow to crate new documents
+*/
+
+// allow authenticator to read all documents
+rule AuthenticatorReadDocumentsPermission{
+  description: "allow to read all documents"
+  participant: "org.docblocks.participant.Authenticator"
+  operation: READ
+  resource: "org.docblocks.document.Document"
+  action: ALLOW
+}
+
+// allow to read students
+rule AuthenticatorReadStudentsPermission {
+  description: "allow to read students"
+  participant: "org.docblocks.participant.Authenticator"
+  operation: READ
+  resource: "org.docblocks.participant.Student"
+  action: ALLOW
+}
+
+// allow to read institute admin for same institute
+rule AuthenticatorReadInstituteAdminPermission {
+  description: "allow to read institute admin for same institute"
+  participant(p): "org.docblocks.participant.Authenticator"
+  operation: READ
+  resource(r): "org.docblocks.participant.InstituteAdmin"
+  condition: (p.institute.getIdentifier() == r.institute.getIdentifier())
+  action: ALLOW
+}
+
+// allow to read authenticator for same institute
+rule AuthenticatorReadAuthenticatorPermission {
+  description: "allow to read authenticator for same institute"
+  participant(p): "org.docblocks.participant.Authenticator"
+  operation: READ
+  resource(r): "org.docblocks.participant.Authenticator"
+  condition: (p.institute.getIdentifier() == r.institute.getIdentifier())
+  action: ALLOW
+}
+
+/*
+* STUDENTS
+* allow to read self certificates
+*/
+
+
+// allow any student to access only his/her certificates 
+rule EDUStudentCertificateReadPermission{
+  description: "allow student to read personal certificates"
+  participant(t): "org.docblocks.participant.Student"
+  operation: READ
+  resource(v): "org.docblocks.document.Document"
+  condition: (v.student.getIdentifier() == t.getIdentifier())
+  action: ALLOW
+}

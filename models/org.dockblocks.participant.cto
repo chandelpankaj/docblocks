@@ -1,0 +1,97 @@
+namespace org.docblocks.participant
+
+/** Participants model*/
+
+abstract participant EDUParticipant identified by participantKey {
+  o String participantKey
+}
+
+concept Contact {
+  o String fName
+  o String lName
+  o String email 
+  //regex=/[a-z0-9.-]+@[a-z0-9.]+/
+  o String mobile
+}
+
+participant EDUNetworkAdmin extends EDUParticipant {
+  o Contact contact
+}
+
+participant CertificateIssuer extends EDUParticipant {
+  --> Institute institute
+  o Contact contact
+}
+
+
+participant Authenticator extends EDUParticipant {
+  --> Institute institute
+  o Contact contact
+}
+
+participant InstituteAdmin extends EDUParticipant{
+  --> Institute institute
+  o Contact contact
+}
+
+enum Gender {
+  o MALE
+  o FEMALE
+}
+
+participant Student extends EDUParticipant{
+  o String fName
+  o String lName
+  o Gender gender
+  o String state
+  o String city
+  o String address
+  o String DOB
+}
+
+participant Institute identified by instituteId {
+  o String instituteId
+  o String instituteName
+  o String instituteState
+  o String instituteCity
+  o String instituteAddress
+  o String institutePin regex=/[0-9][0-9][0-9][0-9][0-9][0-9]/
+  o String phoneNumber
+}
+
+transaction CreateCertificateIssuer {
+  o String participantKey
+  o Contact contact
+}
+
+transaction CreateInstituteAdmin {
+  o String participantKey
+  o String instituteId
+  o Contact contact
+}
+
+transaction CreateAuthenticator {
+  o String participantKey
+  o Contact contact
+}
+
+transaction CreateInstitute {
+  o String instituteId
+  o String instituteName
+  o String instituteState
+  o String instituteCity
+  o String instituteAddress
+  o String institutePin
+  o String phoneNumber
+}
+
+transaction CreateStudent {
+  o String id
+  o String fName
+  o String lName
+  o String gender
+  o String state
+  o String city
+  o String address
+  o String DOB
+}

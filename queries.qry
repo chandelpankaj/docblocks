@@ -1,0 +1,100 @@
+/**
+* all named queries
+*/
+
+// return all documents
+query getgAllDocuments {
+  description: "Return all documents in the registry"
+  statement:
+    SELECT org.docblocks.document.Document
+}
+
+query getDocumentById {
+  description: "Return document by id in the registry"
+  statement:
+    SELECT org.docblocks.document.Document
+      WHERE (documentId == _$document_id)
+}
+
+query getDocumentByStudentId {
+  description: "Return all documents of a particular student"
+  statement:
+    SELECT org.docblocks.document.Document
+      WHERE (student.participantKey == _$student_id)
+}
+
+query getAllInstitutes {
+  description: "Return all institutes"
+  statement:
+    SELECT org.docblocks.participant.Institute
+}
+
+query getInstitutesByState {
+  description: "Return all institutes of a particular state"
+  statement:
+    SELECT org.docblocks.participant.Institute
+      WHERE (instituteState == _$instituteState)
+}
+
+query getInstituteById {
+  description: "Return institute by id"
+    statement:
+      SELECT org.docblocks.participant.Institute
+        WHERE (instituteId == _$institute_id)
+}
+
+query getStudentsById {
+  description: "Return student by id"
+    statement:
+      SELECT org.docblocks.participant.Student
+        WHERE (participantKey == _$student_id)
+}
+
+query getAllCertificateIssuer {
+  description: "Return certificate issuer list"
+  statement: 
+    SELECT org.docblocks.participant.CertificateIssuer
+}
+
+query getCertificateIssuerByInstitute {
+  description: "Return certificate issuer by Institute"
+    statement:
+      SELECT org.docblocks.participant.CertificateIssuer
+        WHERE (institute.instituteId == _$institute_id)
+}
+
+query getAuthenticator {
+  description: "Return authenticator list"
+  statement: 
+    SELECT org.docblocks.participant.Authenticator
+}
+
+query getAuthenticatorByInstitute {
+  description: "Return authenticators by Institute"
+  statement: 
+    SELECT org.docblocks.participant.Authenticator
+    WHERE (institute.instituteId == _$institute_id)
+}
+
+query getAllInstituteAdmins {
+  description: "Return all institute admins"
+  statement:
+    SELECT org.docblocks.participant.InstituteAdmin
+}
+
+query getInstituteAdminByInstitute {
+  description: "Return Institute Admin by Institute"
+  statement:
+    SELECT org.docblocks.participant.InstituteAdmin
+      WHERE (institute.instituteId == _$institute_id)
+}
+
+query getInstituteAdminById {
+  description: "Return institute admin by id"
+  statement: 
+    SELECT org.docblocks.participant.InstituteAdmin
+    WHERE (participantKey == _$participant_key)
+}
+
+
+

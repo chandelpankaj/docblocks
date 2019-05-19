@@ -1,0 +1,25 @@
+namespace org.docblocks.document
+
+import org.docblocks.participant.Student
+import org.docblocks.participant.Institute
+
+/** Document is an EDU asset */
+
+asset Document identified by documentId {
+  o String documentId
+  o String documentHash
+  --> Institute institute
+  --> Student student
+}
+
+// Create a new Document
+transaction CreateDocument {
+  o String documentId
+  o String participantKey
+  o String documentHash
+}
+
+event DocumentCreated{
+  o String documentId
+  o String participantKey
+}
