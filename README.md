@@ -32,6 +32,8 @@ Certificate issuer can read all the documents as well as can create new document
 
 Student can only read his/her own documents only.
 
+## Testing model
+The model can be tested by deploying the docblocks@0.0.1.bna on https://composer-playground.mybluemix.net/
 
 ## Setup
 ## Installing Development Environment
